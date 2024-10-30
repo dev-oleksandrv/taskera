@@ -17,8 +17,8 @@ func LoadConfig() (*Config, error) {
 	}
 
 	if env == "development" {
-		viper.SetConfigFile("env.development.yaml")
-		viper.SetConfigType("yaml")
+		viper.SetConfigFile(".env.development")
+		viper.SetConfigType("dotenv")
 
 		if err := viper.ReadInConfig(); err != nil {
 			log.Printf("Warning: Config file not found: %v", err)
@@ -27,9 +27,14 @@ func LoadConfig() (*Config, error) {
 
 	viper.AutomaticEnv()
 
-	if err := viper.Unmarshal(&config); err != nil {
-		return nil, err
-	}
+	config.Server.Port = viper.GetString("SERVER_PORT")
+	config.Server.Env = viper.GetString("SERVER_ENV")
+	config.Database.Host = viper.GetString("DATABASE_HOST")
+	config.Database.Port = viper.GetInt("DATABASE_PORT")
+	config.Database.Username = viper.GetString("DATABASE_USERNAME")
+	config.Database.Password = viper.GetString("DATABASE_PASSWORD")
+	config.Database.Name = viper.GetString("DATABASE_NAME")
+	config.Auth.Secret = viper.GetString("AUTH_SECRET")
 
 	AppConfig = &config
 
