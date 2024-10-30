@@ -1,14 +1,8 @@
 package repository
 
 import (
-	"errors"
 	"github.com/dev-oleksandrv/taskera/internal/model/domain"
 	"gorm.io/gorm"
-)
-
-var (
-	ErrInvalidUserEmail    = errors.New("invalid user email")
-	ErrInvalidUserPassword = errors.New("invalid user password")
 )
 
 type UserRepository struct {
