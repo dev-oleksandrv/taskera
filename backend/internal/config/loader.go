@@ -10,8 +10,9 @@ var AppConfig *Config
 func LoadConfig() (*Config, error) {
 	var config Config
 
-	viper.SetConfigFile("env.yaml")
+	viper.SetConfigFile("env.development.yaml")
 	viper.SetConfigType("yaml")
+	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file, %s", err)
